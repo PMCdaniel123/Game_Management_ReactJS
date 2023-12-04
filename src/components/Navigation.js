@@ -92,12 +92,6 @@ export default function NavigationBar(props) {
                                 Dashboard
                             </Button>
                         </Link>
-                        <Link to={'/pagination'}>
-                            <Button key={3} sx={{ color: '#fff' }}>
-                                <IconButton><Icon sx={{ color: 'white' }}>dashboard</Icon></IconButton>
-                                Pagination
-                            </Button>
-                        </Link>
                         <Link to={'/contact'}>
                             <Button key={2} sx={{ color: '#fff' }}>
                                 <IconButton><Icon sx={{ color: 'white' }}>contacts</Icon></IconButton>

@@ -6,16 +6,16 @@ import { Card, Grid } from "@mui/material";
 import { CardMedia } from "@mui/material";
 import { Typography } from "@mui/material";
 
-
 export default function Detail() {
 
-    const staff = useParams();
+    const game = useParams();
     // const [value, setValue] = React.useState(2);
     const [APIData, setAPIData] = useState([]);
-    const getStaffsUrl = `https://65459389fe036a2fa9547cff.mockapi.io/staffManagement/${staff.id}`;
+    const getGamesUrl = `https://65459389fe036a2fa9547cff.mockapi.io/GameList/${game.id}`;
+
 
     useEffect(() => {
-        fetch(getStaffsUrl, { method: 'GET' }).then(
+        fetch(getGamesUrl, { method: 'GET' }).then(
             response => {
                 if (!response.ok) {
                     throw new Error(`HTTP status: ${response.status}`);
@@ -25,46 +25,43 @@ export default function Detail() {
             .then(data => { setAPIData(data) })
             .catch(error => console.log(error.message));
 
-    }, [getStaffsUrl])
+    }, [getGamesUrl])
 
     return (
-        <div>
-            <h1>Detail</h1>
-            <Grid container rowSpacing={2} >
+        <div className="marginLR">
+            <Grid container rowSpacing={2} marginTop={10}>
                 <Grid className='parent' item xs={12}>
-                    <Card className='child' sx={{ maxWidth: 545 }}>
+                    <Card className='child' sx={{ maxWidth: 400 }}>
                         <CardMedia
                             sx={{ height: 400 }}
-                            image={APIData.avatar}
-                            title="green iguana"
+                            image={APIData.Background}
+                            title={APIData.Title}
                         />
                         <CardContent>
-                            <Typography gutterBottom variant="h3" component="div">
-                                {APIData.name}
+                            <Typography gutterBottom variant="h3" component="div" style={{ fontWeight: "600" }}>
+                                {APIData.Title}
                             </Typography>
-                            <Typography gutterBottom variant="h6" component="div">
-                                Address: {APIData.address}
+
+                            <Typography gutterBottom variant="h7" component="div" align='left' fontStyle={'italic'}>
+                                {APIData.Description}
                             </Typography>
-                            <Typography gutterBottom variant="h6" component="div">
-                                Age: {APIData.age}
+
+                            <Typography gutterBottom variant="h7" component="div">
+                                Author: {APIData.Author}
                             </Typography>
-                            <Typography gutterBottom variant="h6" component="div">
-                                {APIData.createdAt}
+
+                            <Typography gutterBottom variant="h7" component="div">
+                                Kind: {APIData.Kind}
                             </Typography>
-                            {/* <Box
-                                sx={{
-                                    '& > legend': { mt: 2 },
-                                }}
-                            >
-                                <Typography component="legend">Controlled</Typography>
-                                <Rating
-                                    name="simple-controlled"
-                                    value={value}
-                                    onChange={(event, newValue) => {
-                                        setValue(newValue);
-                                    }}
-                                />
-                            </Box> */}
+
+                            <Typography gutterBottom variant="h7" component="div">
+                                Price: {APIData.Price}$
+                            </Typography>
+
+                            <Typography gutterBottom variant="h7" component="div">
+                                Publish: {APIData.Created_at}
+                            </Typography>
+
                         </CardContent>
                     </Card>
                 </Grid>

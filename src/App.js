@@ -3,13 +3,14 @@ import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Navigation from './components/Navigation';
 import Home from './components/Home';
-import Dashboard from './components/Dashboard';
 import Contact from './components/Contact';
 import Detail from './components/Detail'
-import AddStaff from './components/AddStaff';
-import UpdateStaff from './components/UpdateStaff';
-import PaginationComponent from './components/PaginationComponent'
+import AddGame from './components/AddGame';
+import UpdateGame from './components/UpdateGame';
+import Dashboard from './components/Dashboard'
 import LoginPage from './components/LoginPage';
+import Footer from './components/Footer';
+
 
 function App() {
   return (
@@ -23,17 +24,16 @@ function App() {
 
         <Route path='/dashboard' element={<Dashboard />}></Route>
 
-        <Route path='/pagination' element={<PaginationComponent />}></Route>
-
-        <Route exact path='/contact' element={<Contact />}></Route>
+        <Route path='/contact' element={<Contact />}></Route>
 
         <Route path='/detail/:id' element={<Detail />}></Route>
 
-        <Route path='/addStaff' element={<AddStaff />}></Route>
+        <Route path='/addGame' element={<AddGame />}></Route>
 
-        <Route path='/updateStaff/:id' element={<UpdateStaff />}></Route>
+        <Route path='/updateGame/:id' element={<UpdateGame />}></Route>
       </Routes>
 
+      <Footer />
     </div>
   );
 }
