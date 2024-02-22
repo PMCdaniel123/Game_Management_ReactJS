@@ -1,6 +1,5 @@
 import { CardMedia, Icon, IconButton } from "@mui/material";
 import React from "react"
-import { useEffect, useState } from "react"
 import { Card, CardContent } from "@mui/material";
 import CardActions from "@mui/material/CardActions";
 import Typography from "@mui/material/Typography";
@@ -9,29 +8,44 @@ import Grid from "@mui/material/Grid";
 import { Link } from "react-router-dom";
 import Rating from '@mui/material/Rating';
 import axios from "axios";
-
+import { useQuery } from "@tanstack/react-query"
 
 export default function Home() {
 
-    const [APIData, setAPIData] = useState([]);
-    const getGamesUrl = 'https://65459389fe036a2fa9547cff.mockapi.io/GameList';
+    // const [APIData, setAPIData] = useState([]);
+    // const getGamesUrl = 'https://65459389fe036a2fa9547cff.mockapi.io/GameList';
 
-    useEffect(() => {
-        axios.get(getGamesUrl).then(
-            response => {
-                return response.data;
-            })
-            .then(data => { setAPIData(data.sort((a, b) => { return b.Rating - a.Rating })) })
-            .catch(error => console.log(error.message));
+    // useEffect(() => {
+    //     axios.get(getGamesUrl).then(
+    //         response => {
+    //             return response.data;
+    //         })
+    //         .then(data => { setAPIData(data.sort((a, b) => { return b.Rating - a.Rating })) })
+    //         .catch(error => console.log(error.message));
 
-    }, [])
+    // }, [])
+
+    // Sử dụng call API by axios và quản lí API by useQuery
+
+    const { isPending, error, data } = useQuery({
+        queryKey: ['games'],
+        queryFn: () =>
+            axios
+                .get('https://65459389fe036a2fa9547cff.mockapi.io/GameList')
+                .then((res) => (res.data.sort((a, b) => { return a.Rating - b.Rating })))
+                .catch(error => console.log(error.message))
+    });
+
+    if (isPending) return 'Loading...';
+
+    if (error) return 'An error has occurred: ' + error.message;
 
     return (
         <div className="marginLR">
             <h1 className="font-pages" style={{ marginBottom: '0' }}>Home</h1>
 
             <Grid container rowSpacing={{ xs: 1, sm: 2, md: 3 }} columnSpacing={{ xs: 1, sm: 2, md: 3 }} >
-                {APIData.map((game) => (
+                {data.map((game) => (
                     <Grid item xs={6} sm={4} md={3} key={game.id}>
                         <Card sx={{ maxWidth: 345, minHeight: 600 }} style={{ backgroundColor: "black", color: "white", position: "relative" }} >
                             <CardMedia
